@@ -67,10 +67,6 @@
   "main": "./dist/main.js",
   "private": true,
   "productName": "Vue Electron Template",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mubaidr/vue-electron-template.git"
-  },
   "scripts": {
     "build": "run-s rebuild:electron pack build-release",
     "build-release": "node _scripts/build.js",
