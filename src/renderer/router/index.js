@@ -1,60 +1,56 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import About from '../views/About.vue'
-import Help from '../views/Help.vue'
-import Home from '../views/Home.vue'
+import VueRouter from 'vue-router'
+import Home from '../views/Home'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-const router = new Router({
-  routes: [
-    {
-      path: '/',
-      redirect: '/home',
-    },
-    {
-      path: '/home',
-      meta: {
-        title: 'Home',
-        icon: 'fa-home',
+const routes = [
+  {
+    path: '/',
+    component: Home
+  },
+  {
+    path: '/Downloader',
+    component: () => import('../components/Downloader'),
+    children: [
+      {
+        path: '',
+        redirect: 'API'
       },
-      component: Home,
-    },
-    {
-      path: '/about',
-      meta: {
-        title: 'About',
-        icon: 'fa-info-circle',
+      {
+        path: 'API',
+        name: 'Api',
+        component: () => import('../components/Api')
       },
-      component: About,
-    },
-    {
-      path: '/help',
-      meta: {
-        title: 'Help',
-        icon: 'fa-info-circle',
+      {
+        path: 'Login',
+        name: 'Login',
+        component: () => import('../components/Login')
       },
-      component: Help,
-    },
-    {
-      path: '*',
-      redirect: '/home',
-    },
-  ],
-})
-
-// dynamically set application title to current view
-router.afterEach((to) => {
-  let title =
-    to.path === '/home'
-      ? process.env.PRODUCT_NAME
-      : `${to.meta.title} - ${process.env.PRODUCT_NAME}`
-
-  if (!title) {
-    title = 'Home'
+      {
+        path: 'Repeat',
+        name: 'Repeat',
+        component: () => import('../components/Repeat')
+      },
+      {
+        path: 'Status',
+        name: 'Status',
+        component: () => import('../components/Status')
+      },
+      {
+        path: 'Storage',
+        name: 'Storage',
+        component: () => import('../components/Storage')
+      }
+    ]
   }
+]
 
-  document.title = title
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes,
+  linkActiveClass: 'active'
 })
 
 export default router

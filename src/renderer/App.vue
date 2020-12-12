@@ -1,19 +1,36 @@
 <template>
-  <div id="app" class="container-fluid">
-    <Transition mode="out-in" name="slide-up">
-      <!-- <keep-alive> -->
-      <RouterView />
-      <!-- </keep-alive> -->
-    </Transition>
-  </div>
+    <v-app>
+        <v-main>
+            <Home v-if="homepage" />
+            <Downloader v-if="!homepage" />
+        </v-main>
+    </v-app>
 </template>
 
 <script>
-import Vue from 'vue'
+import Downloader from './components/Downloader';
+import Home from './views/Home'
 
-export default Vue.extend({
-  name: 'ImageParsing',
-})
+export default {
+    name: 'App',
+
+    components: {
+        Home,
+        Downloader,
+    },
+
+    watch: {
+        $route (to, from) {
+            if (to.path === '/') {
+                this.homepage = true;
+            } else {
+              this.homepage = false;
+            }
+        },
+    },
+
+    data: () => ({
+        homepage: true
+    }),
+};
 </script>
-
-<style lang="scss"></style>
